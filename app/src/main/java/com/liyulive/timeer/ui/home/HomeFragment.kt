@@ -14,6 +14,7 @@ import com.liyulive.timeer.R
 import com.liyulive.timeer.TimeErApplication
 import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.database.TimeErDatabase
+import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
 import com.liyulive.timeer.ui.adapter.TimeListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -49,11 +50,10 @@ class HomeFragment : Fragment() {
             homeViewModel.timeList.addAll(result)
             adapter.notifyDataSetChanged()
         })
-
         floatBtn.setOnClickListener {
             homeViewModel.getTimeList(homeViewModel.today)
             homeViewModel.lastTime = getLastTime(homeViewModel.timeList)
-            val time = Timer(homeViewModel.today, homeViewModel.lastTime, System.currentTimeMillis(), 0, "空空如也~")
+            val time = Timer(homeViewModel.today, homeViewModel.lastTime, System.currentTimeMillis(), -1, "空空如也~")
             val t = thread {
                 TimeErDatabase.insertTimer(time)
             }
@@ -62,6 +62,13 @@ class HomeFragment : Fragment() {
             adapter.notifyDataSetChanged()
             homeViewModel.lastTime = System.currentTimeMillis()
             timeRecyclerView.scrollToPosition(adapter.itemCount - 1)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        thread {
+            homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
         }
     }
 

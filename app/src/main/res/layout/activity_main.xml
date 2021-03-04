@@ -23,7 +23,7 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/teal_700"
+        android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Light"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:ignore="MissingConstraints">
@@ -89,7 +89,7 @@
                 android:id="@+id/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:week_background="@color/teal_700"
+                app:week_background="?attr/colorPrimary"
                 app:week_text_color="@color/white"
                 app:current_month_lunar_text_color="#616266"
                 app:month_view="com.liyulive.timeer.ui.calendar.CalendarMonth"

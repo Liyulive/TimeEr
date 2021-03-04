@@ -1,23 +1,33 @@
 package com.liyulive.timeer
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import android.widget.CalendarView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.haibin.calendarview.Calendar
+import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.TimerDB
 import com.liyulive.timeer.logic.database.TimeErDatabase
+import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
 import com.liyulive.timeer.ui.home.HomeViewModel
+import com.liyulive.timeer.ui.mycontroller.EditDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
@@ -41,9 +51,10 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
         val rotateUp = AnimationUtils.loadAnimation(this, R.anim.rotate_up)
         rotateDown.fillAfter = true
         rotateUp.fillAfter = true
-        rotateDown.interpolator = AccelerateInterpolator()
-        rotateUp.interpolator = AccelerateInterpolator()
+        rotateDown.interpolator = AccelerateDecelerateInterpolator()
+        rotateUp.interpolator = AccelerateDecelerateInterpolator()
 
+        /*toolbar折叠*/
         toolText.setOnClickListener {
             if (isExpanded) {
                 appBar.setExpanded(false)
@@ -65,7 +76,7 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
 
         calendar.setOnCalendarSelectListener(this)
 
-        /*启动查询*/
+        /*启动时查询*/
         homeViewModel.today = "${calendar.curYear}-${calendar.curMonth}-${calendar.curDay}"
         homeViewModel.getTimeList(homeViewModel.today)
 
@@ -85,6 +96,12 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
         } else {
             floatBtn.visibility = View.GONE
         }
+        val rotateUp = AnimationUtils.loadAnimation(this, R.anim.rotate_up)
+        rotateUp.fillAfter = true
+        rotateUp.interpolator = AccelerateDecelerateInterpolator()
+        appBar.setExpanded(false)
+        isExpanded = false
+        toolbarArrow.startAnimation(rotateUp)
     }
 
     private fun weekToCn(week: Int): String {

@@ -3,4 +3,7 @@
     <string name="title_home">主页</string>
     <string name="title_dashboard">统计</string>
     <string name="title_settings">设置</string>
+    <string name="edit_context_hint">给这段时间打个备注吧</string>
+    <string name="save">保存</string>
+    <string name="textedit_hint_type_add_title">自定义类型</string>
 </resources>

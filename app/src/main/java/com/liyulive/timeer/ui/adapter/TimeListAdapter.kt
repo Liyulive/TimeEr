@@ -1,24 +1,37 @@
 package com.liyulive.timeer.ui.adapter
 
 import android.annotation.SuppressLint
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.content.res.Resources
+import android.view.*
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.liyulive.timeer.R
+import com.liyulive.timeer.logic.Repository
+import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
+import com.liyulive.timeer.ui.home.HomeViewModel
+import com.liyulive.timeer.ui.mycontroller.EditDialogFragment
+import com.liyulive.timeer.ui.mycontroller.MdCard
 import java.text.SimpleDateFormat
+import kotlin.concurrent.thread
 
-class TimeListAdapter(private val fragment: Fragment, val timeList: List<Timer>) :
-    RecyclerView.Adapter<TimeListAdapter.ViewHolder>() {
+class TimeListAdapter(
+    private val fragment: Fragment,
+    val timeList: List<Timer>
+) :
+        RecyclerView.Adapter<TimeListAdapter.ViewHolder>() {
+
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var typeList: ArrayList<DiyType>
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val timeText: TextView = view.findViewById(R.id.item_time_text)
         val timeContent: TextView = view.findViewById(R.id.item_time_context)
-        val card: MaterialCardView = view.findViewById(R.id.type_card)
+        val card: MaterialCardView = view.findViewById(R.id.time_card)
+        val typeCard: MaterialCardView = view.findViewById(R.id.type_card)
         val type: TextView = view.findViewById(R.id.type_text)
     }
 
@@ -36,8 +49,29 @@ class TimeListAdapter(private val fragment: Fragment, val timeList: List<Timer>)
         val startTimeIndex = startTime.lastIndexOf("/")
         val endTime = simpleDateFormat.format(timeList[position].endTime)
         val endTimeIndex = endTime.lastIndexOf("/")
+        thread {
+            typeList = Repository.queryAllType() as ArrayList<DiyType>
+        }.join()
+        if (timeList[position].type == -1) {
+            holder.type.text = "未定义类型"
+            holder.typeCard.setBackgroundColor(fragment.resources.getColor(R.color.teal_700))
+        } else {
+            holder.type.text = typeList[timeList[position].type].typeName
+            holder.typeCard.setBackgroundColor(
+                MdCard.getColor(
+                    fragment.resources,
+                    typeList[timeList[position].type].typeColor
+                )
+            )
+        }
         holder.timeText.text = "${startTime.substring(startTimeIndex + 1)}-${endTime.substring(endTimeIndex + 1)} 共${millsToHM(haveTime)}"
         holder.timeContent.text = timeList[position].context
+
+        val editDialogFragment = EditDialogFragment(timeList[position])
+        holder.card.setOnClickListener {
+            editDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
+            editDialogFragment.show(fragment.parentFragmentManager, "yes")
+        }
     }
 
     override fun getItemCount() = timeList.size
@@ -49,9 +83,10 @@ class TimeListAdapter(private val fragment: Fragment, val timeList: List<Timer>)
         return mills
     }
 
-    fun millsToHM(mss: Long): String? { /*毫秒到小时分*/
+    private fun millsToHM(mss: Long): String? { /*毫秒到小时分*/
         val hours = mss % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)
         val minutes = mss % (1000 * 60 * 60) / (1000 * 60)
         return "${hours}时${minutes}分"
     }
+
 }

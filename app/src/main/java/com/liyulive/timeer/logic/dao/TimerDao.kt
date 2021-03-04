@@ -1,9 +1,7 @@
 package com.liyulive.timeer.logic.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
+import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
 
 @Dao
@@ -20,5 +18,18 @@ interface TimerDao {
 
     @Query("select * from Timer where date = :date")
     fun loadTimerByDate(date: String): List<Timer>
+
+
+    @Insert
+    fun insertType(type: DiyType): Long
+
+    @Update
+    fun updateType(newType: DiyType)
+
+    @Query("select * from DiyType")
+    fun queryType(): List<DiyType>
+
+    @Delete
+    fun deleteType(type: DiyType)
 
 }
