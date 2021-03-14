@@ -19,6 +19,8 @@ interface TimerDao {
     @Query("select * from Timer where date = :date")
     fun loadTimerByDate(date: String): List<Timer>
 
+    @Query("select * from Timer where type = :type")
+    fun queryFromType(type: Int): List<Timer>
 
     @Insert
     fun insertType(type: DiyType): Long

@@ -14,8 +14,16 @@ object Repository {
 
     val typeDao = TimerDB.getDatabase(TimeErApplication.context).timerDao()
 
+    fun queryAllTime(): List<Timer> {
+        return typeDao.loadAllTimer()
+    }
+
+    fun queryTimeByDate(date: String): List<Timer> {
+        return typeDao.loadTimerByDate(date)
+    }
+
     fun searchTimeList(query: String)= liveData(Dispatchers.IO) {
-        val result = TimeErDatabase.loadTimerByDate(query)
+        val result = queryTimeByDate(query)
         emit(result)
     }
 
@@ -39,5 +47,9 @@ object Repository {
 
     fun updateTimeItem(time: Timer) {
         typeDao.updateTimer(time)
+    }
+
+    fun queryTimerFromType(type: Int): List<Timer> {
+        return typeDao.queryFromType(type)
     }
 }

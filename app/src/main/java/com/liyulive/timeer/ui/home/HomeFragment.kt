@@ -1,6 +1,7 @@
 package com.liyulive.timeer.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,27 @@ class HomeFragment : Fragment() {
         homeViewModel =
                 ViewModelProvider(activity!!).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+
+//        adapter.notifyDataSetChanged()
+        //homeViewModel.timeListForAdapter = Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>
+        homeViewModel.timeLiveData.observe(viewLifecycleOwner, Observer { result ->
+//            homeViewModel.timeList.clear()
+//            homeViewModel.timeList.addAll(result)
+            homeViewModel.timeList =
+                Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>
+            homeViewModel.timeListForAdapter.clear()
+            homeViewModel.timeListForAdapter.addAll(homeViewModel.timeList)
+            Log.d("HomeFragment", "observe")
+//            homeViewModel.timeListForAdapter = Repository.queryTimeByDate(homeViewModel.today) as ArrayList<Timer>
+//            homeViewModel.timeListForAdapter = homeViewModel.timeList
+            adapter.notifyDataSetChanged()
+        })
+//        homeViewModel.forAdapterLiveData.observe(viewLifecycleOwner) {
+//            adapter.notifyDataSetChanged()
+//        }
+        homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
+//        homeViewModel.timeListForAdapter.clear()
+//        homeViewModel.timeListForAdapter.addAll(Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>)
         return root
     }
 
@@ -42,14 +64,13 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val layoutManager = LinearLayoutManager(activity)
         timeRecyclerView.layoutManager = layoutManager
-        adapter = TimeListAdapter(this, homeViewModel.timeList)
+        adapter = TimeListAdapter(this, homeViewModel.timeListForAdapter, homeViewModel.typeList)
         timeRecyclerView.adapter = adapter
 
-        homeViewModel.timeLiveData.observe(viewLifecycleOwner, Observer { result ->
-            homeViewModel.timeList.clear()
-            homeViewModel.timeList.addAll(result)
+        homeViewModel.typeListLiveData.observe(viewLifecycleOwner) {
             adapter.notifyDataSetChanged()
-        })
+        }
+
         floatBtn.setOnClickListener {
             homeViewModel.getTimeList(homeViewModel.today)
             homeViewModel.lastTime = getLastTime(homeViewModel.timeList)
@@ -67,9 +88,10 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        thread {
+        /*thread {
+            homeViewModel.timeListForAdapter = Repository.queryAllTime() as ArrayList<Timer>
             homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
-        }
+        }.join()*/
     }
 
     private fun getLastTime(list: List<Timer>): Long {

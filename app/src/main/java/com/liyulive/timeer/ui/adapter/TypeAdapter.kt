@@ -32,13 +32,20 @@ class TypeAdapter(var typeList: MutableList<DiyType>, val resources: Resources, 
         val holder = ViewHolder(view)
 
         holder.type_card.setOnLongClickListener {
-            Repository.deleteType(typeList[holder.adapterPosition])
-            Toast.makeText(TimeErApplication.context, "删除成功", Toast.LENGTH_SHORT).show()
-            thread {
-                typeList.clear()
-                typeList = Repository.queryAllType() as MutableList<DiyType>
+            //TODO 一堆bug
+            val deleteList = Repository.queryTimerFromType(typeList[holder.adapterPosition].id.toInt() - 1)
+            deleteList.forEach {
+                it.type = -1
+                Repository.updateTimeItem(it)
             }
+
+            //删除后查询显示
+            Repository.deleteType(typeList[holder.adapterPosition])
+            typeList.clear()
+            typeList = Repository.queryAllType() as MutableList<DiyType>
+            Toast.makeText(TimeErApplication.context, "删除成功", Toast.LENGTH_SHORT).show()
             notifyDataSetChanged()
+
             true
         }
 
@@ -56,6 +63,7 @@ class TypeAdapter(var typeList: MutableList<DiyType>, val resources: Resources, 
             addDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
             addDialogFragment.show(fragmentManager, "editType")
         }
+
     }
 
     override fun getItemCount() = typeList.size

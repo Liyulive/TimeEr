@@ -20,12 +20,13 @@ import kotlin.concurrent.thread
 
 class TimeListAdapter(
     private val fragment: Fragment,
-    val timeList: List<Timer>
+    val timeList: List<Timer>,
+    val typeList: List<DiyType>
 ) :
         RecyclerView.Adapter<TimeListAdapter.ViewHolder>() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var typeList: ArrayList<DiyType>
+    //private lateinit var typeList: ArrayList<DiyType>
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val timeText: TextView = view.findViewById(R.id.item_time_text)
@@ -49,18 +50,18 @@ class TimeListAdapter(
         val startTimeIndex = startTime.lastIndexOf("/")
         val endTime = simpleDateFormat.format(timeList[position].endTime)
         val endTimeIndex = endTime.lastIndexOf("/")
-        thread {
+        /*thread {
             typeList = Repository.queryAllType() as ArrayList<DiyType>
-        }.join()
+        }.join()*/
         if (timeList[position].type == -1) {
             holder.type.text = "未定义类型"
             holder.typeCard.setBackgroundColor(fragment.resources.getColor(R.color.teal_700))
         } else {
-            holder.type.text = typeList[timeList[position].type].typeName
+            holder.type.text = typeList.filter { it.id.toInt() == timeList[position].type + 1 }[0].typeName
             holder.typeCard.setBackgroundColor(
                 MdCard.getColor(
                     fragment.resources,
-                    typeList[timeList[position].type].typeColor
+                    typeList.filter { it.id.toInt() == timeList[position].type + 1 }[0].typeColor
                 )
             )
         }

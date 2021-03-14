@@ -50,7 +50,7 @@ class EditDialogFragment(var timer: Timer) : DialogFragment() {
         }
 
         edit_save.setOnClickListener {
-            timer.type = adapter.mPosition
+            timer.type = typeList[adapter.mPosition].id.toInt() - 1
             timer.context = edit_context.text.toString()
             thread {
                 Repository.updateTimeItem(timer)

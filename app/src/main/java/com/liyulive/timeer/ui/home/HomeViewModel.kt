@@ -1,7 +1,5 @@
 package com.liyulive.timeer.ui.home
 
-import android.app.Dialog
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -12,12 +10,20 @@ import com.liyulive.timeer.logic.model.Timer
 class HomeViewModel : ViewModel() {
 
     private val searchLiveData = MutableLiveData<String>()
+    val typeListLiveData = MutableLiveData<List<DiyType>>()
+    val forAdapterLiveData = MutableLiveData<List<Timer>>()
 
-    val timeList = ArrayList<Timer>()
+    var timeList = ArrayList<Timer>()
     var typeList = ArrayList<DiyType>()
-    var todayTimeList = ArrayList<Timer>()
+    var timeListForAdapter = ArrayList<Timer>()
     var lastTime: Long = 0
     var today: String = ""
+    var selectDay: String = ""
+
+    init {
+        typeListLiveData.value = typeList
+        forAdapterLiveData.value = timeListForAdapter
+    }
 
     val timeLiveData = Transformations.switchMap(searchLiveData) { query ->
         Repository.searchTimeList(query)

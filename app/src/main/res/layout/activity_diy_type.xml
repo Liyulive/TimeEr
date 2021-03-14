@@ -21,6 +21,10 @@
         android:id="@+id/recyclerViewType"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingBottom="12dp"
+        android:paddingEnd="12dp"
+        android:clipToPadding="false"
+        tools:ignore="RtlSymmetry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
