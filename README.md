@@ -7,11 +7,13 @@
 
 ##### 基础功能
 
-![image-20210314091434758](C:\Users\Liyu\AppData\Roaming\Typora\typora-user-images\image-20210314091434758.png)![image-20210314091439181](C:\Users\Liyu\AppData\Roaming\Typora\typora-user-images\image-20210314091439181.png)
+![image.png](https://i.loli.net/2021/03/14/Gm6wL1X58UDrczd.png)
+![image.png](https://i.loli.net/2021/03/14/7NIH8xfV1jh3vR4.png)
+
 
 ###### 自定义类型
 
-![image-20210314091648734](C:\Users\Liyu\AppData\Roaming\Typora\typora-user-images\image-20210314091648734.png)
+![image.png](https://i.loli.net/2021/03/14/gSmDOkc8TwPe79U.png)
 
 ##### bug
 
