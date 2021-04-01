@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         homeViewModel =
-                ViewModelProvider(activity!!).get(HomeViewModel::class.java)
+                ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
 //        adapter.notifyDataSetChanged()
@@ -50,6 +50,7 @@ class HomeFragment : Fragment() {
 //            homeViewModel.timeListForAdapter = Repository.queryTimeByDate(homeViewModel.today) as ArrayList<Timer>
 //            homeViewModel.timeListForAdapter = homeViewModel.timeList
             adapter.notifyDataSetChanged()
+            //notifyDataSetChanged必须保证list没变，用add不能用=
         })
 //        homeViewModel.forAdapterLiveData.observe(viewLifecycleOwner) {
 //            adapter.notifyDataSetChanged()

@@ -1,6 +1,7 @@
 package com.liyulive.timeer.ui.adapter
 
 import android.content.res.Resources
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,17 @@ class TypeAdapter(var typeList: MutableList<DiyType>, val resources: Resources, 
 
         holder.type_card.setOnClickListener {
             val addDialogFragment = AddDialogFragment(DiyType)
+            addDialogFragment.setOnButtonClickListener(object :
+                AddDialogFragment.DialogOnClickListener {
+                override fun addClick() {
+                }
+
+                override fun editClick() {
+                    typeList.clear()
+                    typeList = Repository.queryAllType() as MutableList<DiyType>
+                    notifyDataSetChanged()
+                }
+            })
             addDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
             addDialogFragment.show(fragmentManager, "editType")
         }

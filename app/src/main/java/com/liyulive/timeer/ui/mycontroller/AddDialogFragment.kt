@@ -1,5 +1,6 @@
 package com.liyulive.timeer.ui.mycontroller
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.Adapter
@@ -17,6 +18,8 @@ import kotlinx.android.synthetic.main.edit_fragment.*
 import kotlin.concurrent.thread
 
 class AddDialogFragment(var Type: DiyType) : DialogFragment() {
+
+    private var dialogOnClickListener: DialogOnClickListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         //return super.onCreateView(inflater, container, savedInstanceState)
@@ -58,9 +61,8 @@ class AddDialogFragment(var Type: DiyType) : DialogFragment() {
 
         add_type_save.setOnClickListener {
             val mType = DiyType(editText_add_type_title.text.toString(), editText_add_type_context.text.toString(), adapter.selectColor())
-            thread {
-                Repository.addType(mType)
-            }
+            Repository.addType(mType)
+            dialogOnClickListener?.addClick()
             dismiss()
         }
 
@@ -68,11 +70,19 @@ class AddDialogFragment(var Type: DiyType) : DialogFragment() {
             Type.typeName = editText_add_type_title.text.toString()
             Type.typeContext = editText_add_type_context.text.toString()
             Type.typeColor = adapter.selectColor()
-            thread {
-                Repository.updateType(Type)
-            }
+            Repository.updateType(Type)
+            dialogOnClickListener?.editClick()
             dismiss()
         }
+    }
+
+    fun setOnButtonClickListener(listener: DialogOnClickListener) {
+        this.dialogOnClickListener = listener
+    }
+
+    interface DialogOnClickListener {
+        fun addClick()
+        fun editClick()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

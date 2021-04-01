@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.liyulive.timeer.R
+import com.liyulive.timeer.TimeErApplication
 import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.ui.adapter.TypeAdapter
@@ -47,6 +48,15 @@ class DiyTypeActivity : AppCompatActivity() {
                 val nullType = DiyType("", "", 0)
                 val addDialogFragment = AddDialogFragment(nullType)
                 addDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
+                addDialogFragment.setOnButtonClickListener(object :
+                    AddDialogFragment.DialogOnClickListener {
+                    override fun addClick() {
+
+                    }
+
+                    override fun editClick() {
+                    }
+                })
                 addDialogFragment.show(this.supportFragmentManager, "addType")
             }
             android.R.id.home -> finish()

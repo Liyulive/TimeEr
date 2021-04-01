@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.liyulive.timeer.R
 import com.liyulive.timeer.TimeErApplication
@@ -12,12 +13,14 @@ import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
 import com.liyulive.timeer.ui.adapter.TypeSelectorAdapter
+import com.liyulive.timeer.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.edit_fragment.*
 import kotlin.concurrent.thread
 
 class EditDialogFragment(var timer: Timer) : DialogFragment() {
 
     lateinit var typeList: ArrayList<DiyType>
+    lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         //return super.onCreateView(inflater, container, savedInstanceState)
@@ -35,6 +38,9 @@ class EditDialogFragment(var timer: Timer) : DialogFragment() {
         lp?.width = resources.displayMetrics.widthPixels  //设置宽度，左右填满
         lp?.height = WindowManager.LayoutParams.WRAP_CONTENT
         window?.attributes = lp
+
+        homeViewModel =
+            ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
 
         thread {
             typeList = Repository.queryAllType() as ArrayList<DiyType>
@@ -55,7 +61,7 @@ class EditDialogFragment(var timer: Timer) : DialogFragment() {
             thread {
                 Repository.updateTimeItem(timer)
             }.join()
-            adapter.notifyDataSetChanged()
+            homeViewModel.getTimeList(homeViewModel.selectDay)
             dismiss()
         }
 

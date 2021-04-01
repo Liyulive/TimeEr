@@ -25,6 +25,7 @@
         android:paddingBottom="12dp"
         android:paddingEnd="12dp"
         android:clipToPadding="false"
+        android:background="@color/background"
         tools:ignore="RtlSymmetry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

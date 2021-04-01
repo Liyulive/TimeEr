@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_primary">#212112</color>
     <color name="stroke_default">#FFDBDBDD</color>
+    <color name="background">#FFF2F1F6</color>
     <color name="type_0">#0078d7</color>
     <color name="type_1">#C62828</color>
     <color name="type_2">#E91E63</color>
