@@ -22,6 +22,7 @@ import kotlin.concurrent.thread
 class DiyTypeActivity : AppCompatActivity() {
 
     private var TypeList = ArrayList<DiyType>()
+    lateinit var adapter: TypeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,9 @@ class DiyTypeActivity : AppCompatActivity() {
                 addDialogFragment.setOnButtonClickListener(object :
                     AddDialogFragment.DialogOnClickListener {
                     override fun addClick() {
-
+                        TypeList.clear()
+                        TypeList.addAll(Repository.queryAllType() as ArrayList<DiyType>)
+                        adapter.notifyDataSetChanged()
                     }
 
                     override fun editClick() {
@@ -71,7 +74,7 @@ class DiyTypeActivity : AppCompatActivity() {
             TypeList = Repository.queryAllType() as ArrayList<DiyType>
         }.join()
         val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        val adapter = TypeAdapter(TypeList, resources, this.supportFragmentManager)
+        adapter = TypeAdapter(TypeList, resources, this.supportFragmentManager)
         recyclerViewType.layoutManager = layoutManager
         recyclerViewType.adapter = adapter
         Log.d("DiyTypeActivity", "onResume")

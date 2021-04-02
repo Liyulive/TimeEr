@@ -57,12 +57,17 @@ class EditDialogFragment(var timer: Timer) : DialogFragment() {
 
         edit_save.setOnClickListener {
             timer.type = typeList[adapter.mPosition].id.toInt() - 1
-            timer.context = edit_context.text.toString()
-            thread {
-                Repository.updateTimeItem(timer)
-            }.join()
-            homeViewModel.getTimeList(homeViewModel.selectDay)
-            dismiss()
+            if (timer.type == -1) {
+                Toast.makeText(TimeErApplication.context, "请选择类型", Toast.LENGTH_SHORT).show()
+            } else {
+                timer.context = edit_context.text.toString()
+                thread {
+                    Repository.updateTimeItem(timer)
+                }.join()
+                homeViewModel.getTimeList(homeViewModel.selectDay)
+                dismiss()
+            }
+
         }
 
     }
