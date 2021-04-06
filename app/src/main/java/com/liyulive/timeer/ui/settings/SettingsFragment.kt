@@ -33,5 +33,15 @@ class SettingsFragment : Fragment() {
             val intent = Intent(this.activity, DiyTypeActivity::class.java)
             startActivity(intent)
         }
+
+        setting_ImportAndExport.setOnClickListener {
+            val intent = Intent(this.activity, ImportAndExportActivity::class.java)
+            startActivity(intent)
+        }
+
+        setting_about.setOnClickListener {
+            val intent = Intent(this.activity, AboutActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

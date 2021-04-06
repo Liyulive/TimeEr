@@ -53,8 +53,9 @@ class DiyTypeActivity : AppCompatActivity() {
                     AddDialogFragment.DialogOnClickListener {
                     override fun addClick() {
                         TypeList.clear()
-                        TypeList.addAll(Repository.queryAllType() as ArrayList<DiyType>)
-                        adapter.notifyDataSetChanged()
+                        val mList = Repository.queryAllType() as ArrayList<DiyType>
+                        TypeList.addAll(mList)
+                        adapter.notifyItemInserted(mList.size - 1)
                     }
 
                     override fun editClick() {

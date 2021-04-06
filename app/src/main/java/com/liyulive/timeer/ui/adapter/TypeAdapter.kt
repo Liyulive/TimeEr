@@ -45,10 +45,12 @@ class TypeAdapter(var typeList: ArrayList<DiyType>, val resources: Resources, va
 
             //删除后查询显示
             val bakType = typeList[holder.adapterPosition]
+            val bakPosition = holder.adapterPosition
             Repository.deleteType(bakType)
             typeList.clear()
             typeList.addAll(queryAllType() as ArrayList<DiyType>)
-            notifyDataSetChanged()
+//            notifyDataSetChanged()
+            notifyItemRemoved(holder.adapterPosition)
             Snackbar.make(view, "删除成功", Snackbar.LENGTH_SHORT).setAction("撤销") {
                 Repository.addType(bakType)
                 deleteList.forEach {
@@ -57,7 +59,8 @@ class TypeAdapter(var typeList: ArrayList<DiyType>, val resources: Resources, va
                 }
                 typeList.clear()
                 typeList.addAll(queryAllType() as ArrayList<DiyType>)
-                notifyDataSetChanged()
+//                notifyDataSetChanged()
+                notifyItemInserted(bakPosition)
                 Toast.makeText(TimeErApplication.context, "已撤销", Toast.LENGTH_SHORT).show()
             }.show()
 
@@ -83,7 +86,8 @@ class TypeAdapter(var typeList: ArrayList<DiyType>, val resources: Resources, va
                 override fun editClick() {
                     typeList.clear()
                     typeList.addAll(queryAllType() as ArrayList<DiyType>)
-                    notifyDataSetChanged()
+//                    notifyDataSetChanged()
+                    notifyItemChanged(position)
                 }
             })
             addDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)

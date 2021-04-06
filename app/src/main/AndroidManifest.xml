@@ -10,11 +10,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeEr">
+        <activity android:name=".ui.settings.AboutActivity"
+            android:label="关于"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ui.settings.ImportAndExportActivity"
+            android:label="导入与导出"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ui.settings.diyType.DiyTypeActivity"
             android:label="自定义类型"
-            android:parentActivityName=".MainActivity" >
-        </activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

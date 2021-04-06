@@ -68,22 +68,21 @@ class HomeFragment : Fragment() {
         adapter = TimeListAdapter(this, homeViewModel.timeListForAdapter, homeViewModel.typeList)
         timeRecyclerView.adapter = adapter
 
-        homeViewModel.typeListLiveData.observe(viewLifecycleOwner) {
-            adapter.notifyDataSetChanged()
-        }
+//        homeViewModel.typeListLiveData.observe(viewLifecycleOwner) {
+//            adapter.notifyDataSetChanged()
+//        }
 
         floatBtn.setOnClickListener {
             homeViewModel.getTimeList(homeViewModel.today)
             homeViewModel.lastTime = getLastTime(homeViewModel.timeList)
-            val time = Timer(homeViewModel.today, homeViewModel.lastTime, System.currentTimeMillis(), -1, "空空如也~")
+            val time = Timer(homeViewModel.today, homeViewModel.lastTime, System.currentTimeMillis(), -1, "点击卡片来进行编辑吧")
             val t = thread {
                 TimeErDatabase.insertTimer(time)
             }
             t.join()
-            homeViewModel.getTimeList(homeViewModel.today)
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemInserted(adapter.itemCount)
             homeViewModel.lastTime = System.currentTimeMillis()
-            timeRecyclerView.scrollToPosition(adapter.itemCount - 1)
+            timeRecyclerView.scrollToPosition(adapter.itemCount)
         }
     }
 
