@@ -1,37 +1,21 @@
 package com.liyulive.timeer
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
-import android.widget.CalendarView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.haibin.calendarview.Calendar
-import com.liyulive.timeer.logic.Repository
-import com.liyulive.timeer.logic.TimerDB
-import com.liyulive.timeer.logic.database.TimeErDatabase
-import com.liyulive.timeer.logic.model.DiyType
-import com.liyulive.timeer.logic.model.Timer
 import com.liyulive.timeer.ui.home.HomeViewModel
-import com.liyulive.timeer.ui.mycontroller.EditDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.text.SimpleDateFormat
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.OnCalendarSelectListener{
 
@@ -67,6 +51,9 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
             }
         }
 
+        /*判断首次运行*/
+        firstRun()
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
@@ -82,6 +69,14 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
         homeViewModel.selectDay = homeViewModel.today
         homeViewModel.getTimeList(homeViewModel.today)
 
+    }
+
+    private fun firstRun() {
+        val sharedPreferences = getSharedPreferences("FirstRun", 0)
+        homeViewModel.firstRun = sharedPreferences.getBoolean("First", true)
+        if (homeViewModel.firstRun) {
+            sharedPreferences.edit().putBoolean("First", false).apply()
+        }
     }
 
     override fun onCalendarOutOfRange(calendar: Calendar?) {

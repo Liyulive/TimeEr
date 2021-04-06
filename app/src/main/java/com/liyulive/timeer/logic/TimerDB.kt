@@ -1,6 +1,7 @@
 package com.liyulive.timeer.logic
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -40,6 +41,7 @@ abstract class TimerDB : RoomDatabase() {
                             instance?.typeDao()?.insertType(DiyType("睡觉", "睡觉/午睡", 5))
                             instance?.typeDao()?.insertType(DiyType("用餐", "干饭干饭~", 6))
                             instance?.typeDao()?.insertType(DiyType("杂项", "杂七杂八一些事情囖", 7))
+                            Log.d("test", "db")
                         }
                     }
                 })

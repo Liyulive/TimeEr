@@ -48,12 +48,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/text_primary"
                 android:text="时臣"
+                android:textStyle="bold"
                 android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
                 android:text="记录一天的每一时间"
                 android:layout_marginTop="10dp" />
 

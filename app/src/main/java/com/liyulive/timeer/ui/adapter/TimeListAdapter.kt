@@ -1,28 +1,23 @@
 package com.liyulive.timeer.ui.adapter
 
 import android.annotation.SuppressLint
-import android.content.res.Resources
-import android.util.Log
 import android.view.*
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.liyulive.timeer.R
-import com.liyulive.timeer.TimeErApplication
-import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
+import com.liyulive.timeer.ui.home.HomeFragment
 import com.liyulive.timeer.ui.home.HomeViewModel
 import com.liyulive.timeer.ui.mycontroller.EditDialogFragment
 import com.liyulive.timeer.ui.mycontroller.MdCard
 import java.text.SimpleDateFormat
-import kotlin.concurrent.thread
+import java.util.*
 
 class TimeListAdapter(
-    private val fragment: Fragment,
+    private val fragment: HomeFragment,
     val timeList: List<Timer>,
     val typeList: List<DiyType>
 ) :

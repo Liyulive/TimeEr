@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
+import kotlin.properties.Delegates
 
 class HomeViewModel : ViewModel() {
 
     private val searchLiveData = MutableLiveData<String>()
     val typeListLiveData = MutableLiveData<List<DiyType>>()
     val forAdapterLiveData = MutableLiveData<List<Timer>>()
+    var firstRun by Delegates.notNull<Boolean>()
 
     var timeList = ArrayList<Timer>()
     var typeList = ArrayList<DiyType>()

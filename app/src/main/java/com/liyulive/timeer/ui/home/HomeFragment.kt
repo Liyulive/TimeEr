@@ -1,26 +1,26 @@
 package com.liyulive.timeer.ui.home
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.liyulive.timeer.R
-import com.liyulive.timeer.TimeErApplication
 import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.database.TimeErDatabase
 import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
 import com.liyulive.timeer.ui.adapter.TimeListAdapter
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 class HomeFragment : Fragment() {
@@ -55,7 +55,6 @@ class HomeFragment : Fragment() {
 //        homeViewModel.forAdapterLiveData.observe(viewLifecycleOwner) {
 //            adapter.notifyDataSetChanged()
 //        }
-        homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
 //        homeViewModel.timeListForAdapter.clear()
 //        homeViewModel.timeListForAdapter.addAll(Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>)
         return root
@@ -63,10 +62,22 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val fragment = this
+        homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
         val layoutManager = LinearLayoutManager(activity)
         timeRecyclerView.layoutManager = layoutManager
-        adapter = TimeListAdapter(this, homeViewModel.timeListForAdapter, homeViewModel.typeList)
+        adapter = TimeListAdapter(fragment, homeViewModel.timeListForAdapter, homeViewModel.typeList)
         timeRecyclerView.adapter = adapter
+        Log.d("test", "test")
+
+        val handler = Handler().postDelayed(object : Runnable {
+            override fun run() {
+                Log.d("test", "test1")
+                homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
+                adapter = TimeListAdapter(fragment, homeViewModel.timeListForAdapter, homeViewModel.typeList)
+                timeRecyclerView.adapter = adapter
+            }
+        }, 500)
 
 //        homeViewModel.typeListLiveData.observe(viewLifecycleOwner) {
 //            adapter.notifyDataSetChanged()
