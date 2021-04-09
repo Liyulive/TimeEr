@@ -68,16 +68,12 @@ class HomeFragment : Fragment() {
         timeRecyclerView.layoutManager = layoutManager
         adapter = TimeListAdapter(fragment, homeViewModel.timeListForAdapter, homeViewModel.typeList)
         timeRecyclerView.adapter = adapter
-        Log.d("test", "test")
 
-        val handler = Handler().postDelayed(object : Runnable {
-            override fun run() {
-                Log.d("test", "test1")
-                homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
-                adapter = TimeListAdapter(fragment, homeViewModel.timeListForAdapter, homeViewModel.typeList)
-                timeRecyclerView.adapter = adapter
-            }
-        }, 500)
+        Handler().postDelayed({
+            homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
+            adapter = TimeListAdapter(fragment, homeViewModel.timeListForAdapter, homeViewModel.typeList)
+            timeRecyclerView.adapter = adapter
+        }, 100)
 
 //        homeViewModel.typeListLiveData.observe(viewLifecycleOwner) {
 //            adapter.notifyDataSetChanged()

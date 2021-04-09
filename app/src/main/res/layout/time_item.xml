@@ -26,20 +26,53 @@
             android:layout_weight="1"
             android:paddingBottom="12dp">
 
-            <TextView
-                android:id="@+id/item_time_text"
-                android:text="0:00-12:00 共12小时0分"
+            <LinearLayout
+                android:id="@+id/linear_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="12dp">
+
+                <TextView
+                    android:id="@+id/item_time_text"
+                    android:text="0:00-12:00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_have_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:shapeAppearance="@style/ShapeAppearance.TimeEr.LeftRightRound"
+                    app:cardBackgroundColor="@color/teal_700"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/item_have_time_text"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="12小时0分"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/item_time_context"
                 android:text="刷脸洗牙搞学习"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/item_time_text"
+                app:layout_constraintTop_toBottomOf="@id/linear_time"
                 android:layout_margin="12dp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -48,10 +81,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:cardBackgroundColor="?attr/colorPrimary"
-                app:cardCornerRadius="@dimen/cardview_default_radius"
                 app:cardElevation="0dp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.TimeEr.BottomLeftRounded"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/ShapeAppearance.TimeEr.LeftRightRound">
 
                 <TextView
                     android:id="@+id/type_text"

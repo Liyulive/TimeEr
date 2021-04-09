@@ -32,6 +32,8 @@ class TimeListAdapter(
         val card: MaterialCardView = view.findViewById(R.id.time_card)
         val typeCard: MaterialCardView = view.findViewById(R.id.type_card)
         val type: TextView = view.findViewById(R.id.type_text)
+        val haveTimeCard: MaterialCardView = view.findViewById(R.id.card_have_time)
+        val haveTimeText: TextView = view.findViewById(R.id.item_have_time_text)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -48,22 +50,31 @@ class TimeListAdapter(
         val startTimeIndex = startTime.lastIndexOf("/")
         val endTime = simpleDateFormat.format(timeList[position].endTime)
         val endTimeIndex = endTime.lastIndexOf("/")
+        val id = timeList[position].type + 1
         /*thread {
             typeList = Repository.queryAllType() as ArrayList<DiyType>
         }.join()*/
         if (timeList[position].type == -1) {
             holder.type.text = "未定义类型"
-            holder.typeCard.setBackgroundColor(fragment.resources.getColor(R.color.teal_700))
+            holder.typeCard.setCardBackgroundColor(fragment.resources.getColor(R.color.teal_700))
+            holder.haveTimeCard.setCardBackgroundColor(fragment.resources.getColor(R.color.teal_700))
         } else {
-            holder.type.text = typeList.filter { it.id.toInt() == timeList[position].type + 1 }[0].typeName
-            holder.typeCard.setBackgroundColor(
+            holder.type.text = typeList.filter { it.id.toInt() == id }[0].typeName
+            holder.typeCard.setCardBackgroundColor(
                 MdCard.getColor(
                     fragment.resources,
-                    typeList.filter { it.id.toInt() == timeList[position].type + 1 }[0].typeColor
+                    typeList.filter { it.id.toInt() == id }[0].typeColor
+                )
+            )
+            holder.haveTimeCard.setCardBackgroundColor(
+                MdCard.getColor(
+                    fragment.resources,
+                    typeList.filter { it.id.toInt() == id }[0].typeColor
                 )
             )
         }
-        holder.timeText.text = "${startTime.substring(startTimeIndex + 1)}-${endTime.substring(endTimeIndex + 1)} 共${millsToHM(haveTime)}"
+        holder.timeText.text = "${startTime.substring(startTimeIndex + 1)}-${endTime.substring(endTimeIndex + 1)}"
+        holder.haveTimeText.text = millsToHM(haveTime)
         holder.timeContent.text = timeList[position].context
 
         val editDialogFragment = EditDialogFragment(timeList[position])
@@ -82,9 +93,10 @@ class TimeListAdapter(
         return mills
     }
 
-    private fun millsToHM(mss: Long): String? { /*毫秒到小时分*/
+    private fun millsToHM(mss: Long): String { /*毫秒到小时分*/
         val hours = mss % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)
         val minutes = mss % (1000 * 60 * 60) / (1000 * 60)
+        if (hours == 0L) return "${minutes}分"
         return "${hours}时${minutes}分"
     }
 

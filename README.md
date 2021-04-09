@@ -15,9 +15,7 @@
 
 ##### 基础功能
 
-![image.png](https://i.loli.net/2021/04/01/EofkxUBlgChSZ3n.png)
-
-![image.png](https://i.loli.net/2021/04/01/LYIBFUTbvK6gCQ2.png)
+![image.png](https://i.loli.net/2021/04/09/9Y3AZwWsEcHVr6d.png)![image.png](https://i.loli.net/2021/04/09/NIGlxUXsdYBgTLc.png)
 
 
 ###### 自定义类型
@@ -27,7 +25,7 @@
 ##### bug
 
 - [x] 删除类型后存在闪退
-- [ ] 快速双击条目闪退
+- [x] 快速双击条目闪退
 - [ ] 选择日期小概率闪退
 
 
@@ -36,7 +34,7 @@
 
 - [ ] 可视化数据
 - [x] 即时刷新
-- [ ] 主题
+- [ ] ~~主题~~
 - [ ] 导入与导出
-- [ ] 主页条目美化一下
+- [x] 主页条目美化一下
 - [ ] ...
