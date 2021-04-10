@@ -18,7 +18,7 @@ class CalendarMonth(context: Context?) : MonthView(context) {
     override fun onDrawSelected(canvas: Canvas, calendar: Calendar, x: Int, y: Int, hasScheme: Boolean): Boolean {
         val cx = x + mItemWidth / 2
         val cy = y + mItemHeight / 2
-        mSelectedPaint.color = 0xff008786.toInt()
+        mSelectedPaint.color = 0xffdda5ae.toInt()
         canvas.drawCircle(cx.toFloat(), cy.toFloat(), mRadius.toFloat(), mSelectedPaint)
         return true
     }
