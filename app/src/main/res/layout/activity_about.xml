@@ -17,7 +17,7 @@
             app:popupTheme="@style/Theme.AppCompat.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextColor="@color/text_title"
+            app:titleTextColor="@color/white"
             android:background="?attr/colorPrimary"
             tools:ignore="MissingConstraints">
 
