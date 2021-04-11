@@ -56,8 +56,8 @@ class TimeListAdapter(
         }.join()*/
         if (timeList[position].type == -1) {
             holder.type.text = "未定义类型"
-            holder.typeCard.setCardBackgroundColor(fragment.resources.getColor(R.color.teal_700))
-            holder.haveTimeCard.setCardBackgroundColor(fragment.resources.getColor(R.color.teal_700))
+            holder.typeCard.setCardBackgroundColor(fragment.resources.getColor(R.color.flt))
+            holder.haveTimeCard.setCardBackgroundColor(fragment.resources.getColor(R.color.flt))
         } else {
             holder.type.text = typeList.filter { it.id.toInt() == id }[0].typeName
             holder.typeCard.setCardBackgroundColor(

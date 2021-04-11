@@ -2,8 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.TimeEr" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/flt</item>
-        <item name="colorPrimaryVariant">@color/flt</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="colorOnPrimary">@color/text_primary</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/flt</item>
@@ -12,7 +13,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlNormal">@color/text_title</item>
     </style>
 
     <!--底部弹出动画-->
@@ -35,6 +36,14 @@
     <style name="dialog_bottom_full_anim" >
         <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
         <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="toolbar_default" parent="ThemeOverlay.AppCompat.Light">
+
+        <item name="android:elevation">4dp</item>
+        <item name="colorControlNormal">@color/text_title</item>
+        <item name="titleTextColor">@color/text_title</item>
+
     </style>
 
 </resources>

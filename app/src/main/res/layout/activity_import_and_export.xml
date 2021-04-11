@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/import_toolbar"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/Theme.AppCompat.Light"
+        android:theme="@style/toolbar_default"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
+        app:titleTextColor="@color/text_title"
         tools:ignore="MissingConstraints">
 
     </androidx.appcompat.widget.Toolbar>
@@ -23,9 +24,9 @@
         android:layout_height="200dp"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="1dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp"
         app:strokeColor="@color/stroke_default"
         android:layout_margin="12dp">
 
@@ -58,9 +59,9 @@
         android:layout_height="200dp"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="1dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp"
         app:strokeColor="@color/stroke_default"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp">

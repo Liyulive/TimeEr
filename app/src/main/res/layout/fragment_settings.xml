@@ -28,7 +28,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_title"
                 android:textSize="16sp"
                 android:text="自定义类型" />
 
@@ -56,7 +56,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_title"
                 android:textSize="16sp"
                 android:text="主题风格" />
 
@@ -84,7 +84,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_title"
                 android:textSize="16sp"
                 android:text="导入和导出" />
 
@@ -113,7 +113,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/text_title"
                 android:textSize="16sp"
                 android:text="关于" />
 

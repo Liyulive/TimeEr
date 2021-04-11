@@ -47,7 +47,7 @@
                     android:id="@+id/toolBarDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_title"
                     android:text="2020年2月29日"
                     android:textSize="20sp" />
 
@@ -67,7 +67,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/text_title"
                 android:textSize="12sp"
                 android:text="星期八" />
 
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:week_background="?attr/colorPrimary"
-                app:week_text_color="@color/white"
+                app:week_text_color="@color/text_primary"
                 app:current_month_lunar_text_color="#616266"
                 app:month_view="com.liyulive.timeer.ui.calendar.CalendarMonth"
                 android:background="@drawable/shape_corner_down"
