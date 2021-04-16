@@ -1,25 +1,32 @@
 package com.liyulive.timeer.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.liyulive.timeer.R
+import com.liyulive.timeer.TimeErApplication
 import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.database.TimeErDatabase
+import com.liyulive.timeer.logic.model.ArcData
 import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
 import com.liyulive.timeer.ui.adapter.TimeListAdapter
+import com.liyulive.timeer.ui.mycontroller.ArcView
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
+import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
@@ -27,7 +34,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var adapter: TimeListAdapter
+    var changeList = ArrayList<Timer>() //用于自定义数据Timer->ArcData
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -37,26 +46,35 @@ class HomeFragment : Fragment() {
                 ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-//        adapter.notifyDataSetChanged()
-        //homeViewModel.timeListForAdapter = Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>
         homeViewModel.timeLiveData.observe(viewLifecycleOwner, Observer { result ->
-//            homeViewModel.timeList.clear()
-//            homeViewModel.timeList.addAll(result)
             homeViewModel.timeList =
                 Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>
             homeViewModel.timeListForAdapter.clear()
             homeViewModel.timeListForAdapter.addAll(homeViewModel.timeList)
-            Log.d("HomeFragment", "observe")
-//            homeViewModel.timeListForAdapter = Repository.queryTimeByDate(homeViewModel.today) as ArrayList<Timer>
-//            homeViewModel.timeListForAdapter = homeViewModel.timeList
-            adapter.notifyDataSetChanged()
+            TimeErApplication.ArcData.clear()
+            changeList.clear()
+            homeViewModel.timeListForAdapter.parallelStream()
+                .collect(Collectors.groupingBy({ o -> o.type }, Collectors.toList()))
+                .forEach { id, transfer ->
+                    transfer.stream()
+                        .reduce { a, b ->
+                            Timer(a.date,
+                                a.startTime,
+                                a.endTime,
+                                a.type,
+                                a.context,
+                                a.haveTime + b.haveTime)
+                        }
+                        .ifPresent {
+                            changeList.add(it)
+                        }
+                }
+            changeList.forEach {
+                TimeErApplication.ArcData.add(ArcData(it.haveTime.toDouble(), it.type))
+            }
             //notifyDataSetChanged必须保证list没变，用add不能用=
+            adapter.notifyDataSetChanged()
         })
-//        homeViewModel.forAdapterLiveData.observe(viewLifecycleOwner) {
-//            adapter.notifyDataSetChanged()
-//        }
-//        homeViewModel.timeListForAdapter.clear()
-//        homeViewModel.timeListForAdapter.addAll(Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>)
         return root
     }
 
@@ -69,20 +87,29 @@ class HomeFragment : Fragment() {
         adapter = TimeListAdapter(fragment, homeViewModel.timeListForAdapter, homeViewModel.typeList)
         timeRecyclerView.adapter = adapter
 
-        Handler().postDelayed({
-            homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
-            adapter = TimeListAdapter(fragment, homeViewModel.timeListForAdapter, homeViewModel.typeList)
-            timeRecyclerView.adapter = adapter
-        }, 100)
 
-//        homeViewModel.typeListLiveData.observe(viewLifecycleOwner) {
-//            adapter.notifyDataSetChanged()
-//        }
+        if (homeViewModel.firstRun) {
+            val sharedPreferences = activity?.getSharedPreferences("FirstRun", 0)
+            Handler().postDelayed({
+                homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
+                adapter = TimeListAdapter(fragment, homeViewModel.timeListForAdapter, homeViewModel.typeList)
+                timeRecyclerView.adapter = adapter
+            }, 100)
+            sharedPreferences?.edit()?.putBoolean("First", false)?.apply()
+            homeViewModel.firstRun = false
+        }
 
         floatBtn.setOnClickListener {
             homeViewModel.getTimeList(homeViewModel.today)
             homeViewModel.lastTime = getLastTime(homeViewModel.timeList)
-            val time = Timer(homeViewModel.today, homeViewModel.lastTime, System.currentTimeMillis(), -1, "点击卡片来进行编辑吧")
+            val endTime = System.currentTimeMillis()
+            val startTime = homeViewModel.lastTime
+            val time = Timer(homeViewModel.today,
+                startTime,
+                endTime,
+                -1,
+                "点击卡片来进行编辑吧",
+                startTime - endTime)
             val t = thread {
                 TimeErDatabase.insertTimer(time)
             }
@@ -91,14 +118,6 @@ class HomeFragment : Fragment() {
             homeViewModel.lastTime = System.currentTimeMillis()
             timeRecyclerView.scrollToPosition(adapter.itemCount)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        /*thread {
-            homeViewModel.timeListForAdapter = Repository.queryAllTime() as ArrayList<Timer>
-            homeViewModel.typeList = Repository.queryAllType() as ArrayList<DiyType>
-        }.join()*/
     }
 
     private fun getLastTime(list: List<Timer>): Long {

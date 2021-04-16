@@ -9,7 +9,8 @@ data class Timer(
     var startTime: Long,
     var endTime: Long,
     var type: Int,
-    var context: String
+    var context: String,
+    var haveTime: Long
 ) {
 
     @PrimaryKey(autoGenerate = true)

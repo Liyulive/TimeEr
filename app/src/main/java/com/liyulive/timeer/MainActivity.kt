@@ -92,9 +92,9 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
 //        homeViewModel.timeListForAdapter.addAll(Repository.queryTimeByDate(homeViewModel.today) as ArrayList<Timer>)
         homeViewModel.getTimeList("${calendar?.year}-${calendar?.month}-${calendar?.day}")
         if (calendar?.isCurrentDay == true) {
-            floatBtn.visibility = View.VISIBLE
+            floatBtn?.visibility = View.VISIBLE
         } else {
-            floatBtn.visibility = View.GONE
+            floatBtn?.visibility = View.GONE
         }
         val rotateUp = AnimationUtils.loadAnimation(this, R.anim.rotate_up)
         rotateUp.fillAfter = true

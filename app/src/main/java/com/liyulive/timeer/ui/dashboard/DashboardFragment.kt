@@ -1,31 +1,37 @@
 package com.liyulive.timeer.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.liyulive.timeer.R
+import com.liyulive.timeer.TimeErApplication
+import com.liyulive.timeer.logic.model.ArcData
+import com.liyulive.timeer.ui.home.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
+        homeViewModel =
+                ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        arc.setData(TimeErApplication.ArcData)
+        arc.invalidate()
     }
 }
