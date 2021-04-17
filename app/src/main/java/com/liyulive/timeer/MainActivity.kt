@@ -83,14 +83,13 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
         TODO("Not yet implemented")
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "ResourceType")
     override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {
         toolBarDate.text = "${calendar?.year}年${calendar?.month}月${calendar?.day}日"
         toolBarWeek.text = calendar?.week?.let { weekToCn(it) }.toString()
         homeViewModel.selectDay = "${calendar?.year}-${calendar?.month}-${calendar?.day}"
-//        homeViewModel.timeListForAdapter = Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>
-//        homeViewModel.timeListForAdapter.addAll(Repository.queryTimeByDate(homeViewModel.today) as ArrayList<Timer>)
         homeViewModel.getTimeList("${calendar?.year}-${calendar?.month}-${calendar?.day}")
+        nav_view.selectedItemId = nav_view.menu.getItem(0).itemId //Todo 临时解决方案
         if (calendar?.isCurrentDay == true) {
             floatBtn?.visibility = View.VISIBLE
         } else {

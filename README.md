@@ -13,14 +13,25 @@
 
 
 
+2021.4.17
+
+界面又改了一下，小修了一下bug，粗略做了一下统计图
+
+
+
 ##### 基础功能
 
-![image.png](https://i.loli.net/2021/04/09/9Y3AZwWsEcHVr6d.png)![image.png](https://i.loli.net/2021/04/09/NIGlxUXsdYBgTLc.png)
+![image.png](https://i.loli.net/2021/04/17/3xoViu5yXWmzc4j.png)![image.png](https://i.loli.net/2021/04/17/3UbnZmHDtCK9AOp.png)
 
 
 ###### 自定义类型
 
-![image.png](https://i.loli.net/2021/04/01/LhnSqHFVr15wNv9.png)
+![image.png](https://i.loli.net/2021/04/17/NIj1uokfY7xsyt2.png)
+
+
+###### 统计
+
+![image.png](https://i.loli.net/2021/04/17/7aMVTdxhlPjJtQe.png)
 
 ##### bug
 

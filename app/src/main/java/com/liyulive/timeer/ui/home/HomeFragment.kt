@@ -70,7 +70,18 @@ class HomeFragment : Fragment() {
                         }
                 }
             changeList.forEach {
-                TimeErApplication.ArcData.add(ArcData(it.haveTime.toDouble(), it.type))
+                if (homeViewModel.typeList.isNotEmpty()) {
+                    if (it.type != -1) {
+                        val type = it.type
+                        TimeErApplication.ArcData.add(ArcData(it.haveTime.toDouble(),
+                            it.id.toInt(),
+                            homeViewModel.typeList.filter { it.id.toInt() == type + 1 }[0].typeName))
+                    } else {
+                        TimeErApplication.ArcData.add(ArcData(it.haveTime.toDouble(),
+                            it.id.toInt(),
+                            "未定义类型"))
+                    }
+                }
             }
             //notifyDataSetChanged必须保证list没变，用add不能用=
             adapter.notifyDataSetChanged()

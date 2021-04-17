@@ -15,7 +15,7 @@ class TimeErApplication : Application() {
     }
 
     init {
-        ArcData.add(ArcData(250.0, 1)) //无法理解的bug但是能够运行
+        ArcData.add(ArcData(250.0, 1, "hello")) //无法理解的bug但是能够运行
         ArcData.clear()
     }
 

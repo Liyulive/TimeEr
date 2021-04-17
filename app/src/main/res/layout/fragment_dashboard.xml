@@ -14,12 +14,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="220dp"
+            android:orientation="horizontal"
+            android:padding="12dp">
 
             <com.liyulive.timeer.ui.mycontroller.ArcView
                 android:id="@+id/arc"
-                android:layout_width="match_parent"
-                android:layout_height="244dp" />
+                android:layout_width="0dp"
+                android:layout_height="400px"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewArc"
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
