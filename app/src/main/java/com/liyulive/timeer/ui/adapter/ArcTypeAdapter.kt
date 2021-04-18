@@ -21,14 +21,14 @@ class ArcTypeAdapter(val ArcTypeList: List<ArcData>, val resources: Resources) :
         val ArcName: TextView = view.findViewById(R.id.textView_ArcType)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArcTypeAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_arc_context, parent, false)
         val holder = ViewHolder(view)
         return holder
     }
 
-    override fun onBindViewHolder(holder: ArcTypeAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.ArcColor.setCardBackgroundColor(MdCard.getColor(resources, ArcTypeList[position].color))
         holder.ArcName.text = ArcTypeList[position].name
     }
