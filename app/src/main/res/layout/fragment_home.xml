@@ -19,6 +19,30 @@
             android:clipToPadding="false"
             />
 
+        <LinearLayout
+            android:id="@+id/layout_nullItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@id/timeRecyclerView"
+            android:orientation="vertical"
+            app:layout_anchorGravity="center">
+
+            <ImageView
+                android:id="@+id/imageView_nullItem"
+                android:layout_gravity="center"
+                android:layout_width="192dp"
+                android:layout_height="192dp"
+                android:src="@drawable/data_processing_animate"/>
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="什么也没有，点击按钮来记录今天的数据吧"/>
+
+        </LinearLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatBtn"
             android:layout_width="wrap_content"

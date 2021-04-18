@@ -1,5 +1,6 @@
 package com.liyulive.timeer.ui.home
 
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -21,6 +22,7 @@ import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
 import com.liyulive.timeer.ui.adapter.TimeListAdapter
 import com.liyulive.timeer.ui.mycontroller.ArcView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
@@ -34,6 +36,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var adapter: TimeListAdapter
+    private var lastTime = 0L //get last time
     var changeList = ArrayList<Timer>() //用于自定义数据Timer->ArcData
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -51,6 +54,17 @@ class HomeFragment : Fragment() {
                 Repository.queryTimeByDate(homeViewModel.selectDay) as ArrayList<Timer>
             homeViewModel.timeListForAdapter.clear()
             homeViewModel.timeListForAdapter.addAll(homeViewModel.timeList)
+
+            /*为空显示背景*/
+            if (homeViewModel.timeList.isEmpty()) {
+                timeRecyclerView.visibility = View.INVISIBLE
+                layout_nullItem.visibility = View.VISIBLE
+            } else {
+                timeRecyclerView.visibility = View.VISIBLE
+                layout_nullItem.visibility = View.INVISIBLE
+            }
+
+            /*获取统计图的数据*/
             TimeErApplication.ArcData.clear()
             changeList.clear()
             homeViewModel.timeListForAdapter.parallelStream()
@@ -58,12 +72,14 @@ class HomeFragment : Fragment() {
                 .forEach { id, transfer ->
                     transfer.stream()
                         .reduce { a, b ->
-                            Timer(a.date,
+                            Timer(
+                                a.date,
                                 a.startTime,
                                 a.endTime,
                                 a.type,
                                 a.context,
-                                a.haveTime + b.haveTime)
+                                a.haveTime + b.haveTime
+                            )
                         }
                         .ifPresent {
                             changeList.add(it)
@@ -73,16 +89,32 @@ class HomeFragment : Fragment() {
                 if (homeViewModel.typeList.isNotEmpty()) {
                     if (it.type != -1) {
                         val type = it.type
-                        TimeErApplication.ArcData.add(ArcData(it.haveTime.toDouble(),
-                            it.id.toInt(),
-                            homeViewModel.typeList.filter { it.id.toInt() == type + 1 }[0].typeName))
+                        TimeErApplication.ArcData.add(
+                            ArcData(
+                                it.haveTime.toDouble(),
+                                it.id.toInt(),
+                                homeViewModel.typeList.filter { it.id.toInt() == type + 1 }[0].typeName
+                            )
+                        )
                     } else {
-                        TimeErApplication.ArcData.add(ArcData(it.haveTime.toDouble(),
-                            it.id.toInt(),
-                            "未定义类型"))
+                        TimeErApplication.ArcData.add(
+                            ArcData(
+                                it.haveTime.toDouble(),
+                                it.id.toInt(),
+                                "未定义类型"
+                            )
+                        )
                     }
                 }
             }
+
+            /*非今天不可添加数据*/
+            if (homeViewModel.selectDay == homeViewModel.today) {
+                floatBtn?.visibility = View.VISIBLE
+            } else {
+                floatBtn?.visibility = View.GONE
+            }
+
             //notifyDataSetChanged必须保证list没变，用add不能用=
             adapter.notifyDataSetChanged()
         })
@@ -112,9 +144,11 @@ class HomeFragment : Fragment() {
 
         floatBtn.setOnClickListener {
             homeViewModel.getTimeList(homeViewModel.today)
-            homeViewModel.lastTime = getLastTime(homeViewModel.timeList)
+            if (lastTime == 0L) {
+                lastTime = getLastTime(homeViewModel.timeList)
+            }
             val endTime = System.currentTimeMillis()
-            val startTime = homeViewModel.lastTime
+            val startTime = lastTime
             val time = Timer(homeViewModel.today,
                 startTime,
                 endTime,
@@ -126,7 +160,7 @@ class HomeFragment : Fragment() {
             }
             t.join()
             adapter.notifyItemInserted(adapter.itemCount)
-            homeViewModel.lastTime = System.currentTimeMillis()
+            lastTime = System.currentTimeMillis()
             timeRecyclerView.scrollToPosition(adapter.itemCount)
         }
     }

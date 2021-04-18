@@ -10,10 +10,8 @@ import com.google.android.material.card.MaterialCardView
 import com.liyulive.timeer.R
 import com.liyulive.timeer.logic.model.ArcData
 import com.liyulive.timeer.ui.mycontroller.MdCard
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.item_arc_context.view.*
 
-class ArcTypeAdapter(val ArcTypeList: List<ArcData>, val resources: Resources) :
+class ArcTypeAdapter(private val ArcTypeList: List<ArcData>, val resources: Resources) :
     RecyclerView.Adapter<ArcTypeAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

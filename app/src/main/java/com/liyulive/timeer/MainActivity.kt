@@ -89,12 +89,11 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
         toolBarWeek.text = calendar?.week?.let { weekToCn(it) }.toString()
         homeViewModel.selectDay = "${calendar?.year}-${calendar?.month}-${calendar?.day}"
         homeViewModel.getTimeList("${calendar?.year}-${calendar?.month}-${calendar?.day}")
-        nav_view.selectedItemId = nav_view.menu.getItem(0).itemId //Todo 临时解决方案
-        if (calendar?.isCurrentDay == true) {
-            floatBtn?.visibility = View.VISIBLE
-        } else {
-            floatBtn?.visibility = View.GONE
-        }
+
+        if (nav_view.selectedItemId != nav_view.menu.getItem(0).itemId) {
+            nav_view.selectedItemId = nav_view.menu.getItem(0).itemId
+        } //Todo 临时解决方案
+        
         val rotateUp = AnimationUtils.loadAnimation(this, R.anim.rotate_up)
         rotateUp.fillAfter = true
         rotateUp.interpolator = AccelerateDecelerateInterpolator()
