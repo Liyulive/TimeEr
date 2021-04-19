@@ -90,16 +90,20 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
         homeViewModel.selectDay = "${calendar?.year}-${calendar?.month}-${calendar?.day}"
         homeViewModel.getTimeList("${calendar?.year}-${calendar?.month}-${calendar?.day}")
 
+        val sharedPreferences = this.getSharedPreferences("GeneralSetting", 0)
+
         if (nav_view.selectedItemId != nav_view.menu.getItem(0).itemId) {
             nav_view.selectedItemId = nav_view.menu.getItem(0).itemId
         } //Todo 临时解决方案
-        
-        val rotateUp = AnimationUtils.loadAnimation(this, R.anim.rotate_up)
-        rotateUp.fillAfter = true
-        rotateUp.interpolator = AccelerateDecelerateInterpolator()
-        appBar.setExpanded(false)
-        isExpanded = false
-        toolbarArrow.startAnimation(rotateUp)
+
+        if (sharedPreferences.getBoolean("auto_close", true)) {
+            val rotateUp = AnimationUtils.loadAnimation(this, R.anim.rotate_up)
+            rotateUp.fillAfter = true
+            rotateUp.interpolator = AccelerateDecelerateInterpolator()
+            appBar.setExpanded(false)
+            isExpanded = false
+            toolbarArrow.startAnimation(rotateUp)
+        }
     }
 
     private fun weekToCn(week: Int): String {

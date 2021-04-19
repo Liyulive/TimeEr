@@ -26,4 +26,5 @@
     <color name="type_10">#66BB6A</color>
     <color name="type_11">#558B2F</color>
     <color name="flt">#DDA5AE</color>
+    <color name="text_unprimary">#D9A7AE</color>
 </resources>

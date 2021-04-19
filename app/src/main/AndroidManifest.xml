@@ -10,7 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeEr">
-        <activity android:name=".ui.settings.AboutActivity"
+        <activity
+            android:name=".ui.settings.GeneralSettingActivity"
+            android:label="常规设置"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ui.settings.AboutActivity"
             android:label="关于"
             android:parentActivityName=".MainActivity" />
         <activity

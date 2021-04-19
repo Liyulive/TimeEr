@@ -7,6 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.liyulive.timeer.R
+import com.liyulive.timeer.TimeErApplication
 import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
 import com.liyulive.timeer.ui.home.HomeFragment
@@ -24,6 +25,7 @@ class TimeListAdapter(
         RecyclerView.Adapter<TimeListAdapter.ViewHolder>() {
 
     private lateinit var homeViewModel: HomeViewModel
+    val sharedPreferences = fragment.activity?.getSharedPreferences("GeneralSetting", 0)
     //private lateinit var typeList: ArrayList<DiyType>
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -51,9 +53,17 @@ class TimeListAdapter(
         val endTime = simpleDateFormat.format(timeList[position].endTime)
         val endTimeIndex = endTime.lastIndexOf("/")
         val id = timeList[position].type + 1
-        /*thread {
-            typeList = Repository.queryAllType() as ArrayList<DiyType>
-        }.join()*/
+
+        /*card属性设置*/
+        val cardRadius: Int = sharedPreferences?.getInt("card_radius", 8) ?: 8
+        val cardElevation: Boolean = sharedPreferences?.getBoolean("card_elevation", false) ?: false
+        if (cardElevation) {
+            holder.card.cardElevation = MdCard.getDimen(2)
+        } else {
+            holder.card.cardElevation = MdCard.getDimen(0)
+        }
+        holder.card.radius = MdCard.getDimen(cardRadius)
+
         if (timeList[position].type == -1) {
             holder.type.text = "未定义类型"
             holder.typeCard.setCardBackgroundColor(fragment.resources.getColor(R.color.flt))

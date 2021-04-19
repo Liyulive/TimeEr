@@ -43,5 +43,10 @@ class SettingsFragment : Fragment() {
             val intent = Intent(this.activity, AboutActivity::class.java)
             startActivity(intent)
         }
+
+        setting_general.setOnClickListener {
+            val intent = Intent(this.activity, GeneralSettingActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

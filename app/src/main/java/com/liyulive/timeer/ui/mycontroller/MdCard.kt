@@ -30,6 +30,27 @@ object MdCard {
 
     }
 
+    fun getDimen(dp: Int) = when (dp) {
+        0 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_0)
+        1 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_1)
+        2 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_2)
+        3 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_3)
+        4 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_4)
+        5 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_5)
+        6 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_6)
+        7 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_7)
+        8 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_8)
+        9 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_9)
+        10 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_10)
+        11 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_11)
+        12 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_12)
+        13 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_13)
+        14 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_14)
+        15 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_15)
+        16 -> TimeErApplication.context.resources.getDimension(R.dimen.dp_16)
+        else -> TimeErApplication.context.resources.getDimension(R.dimen.default_dp)
+    }
+
     fun getColor(resources: Resources, color: Int): Int {
         return when (color) {
             0 -> resources.getColor(R.color.type_0)
