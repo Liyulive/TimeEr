@@ -41,12 +41,20 @@ class DashboardFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val adapter = ArcTypeAdapter(TimeErApplication.ArcData, resources)
-        val layoutManager = LinearLayoutManager(this.context)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerViewArc?.layoutManager = layoutManager
-        recyclerViewArc?.adapter = adapter
-        arc.setData(TimeErApplication.ArcData)
-        arc.invalidate()
+        if (TimeErApplication.ArcData.isEmpty()) {
+            layout_ArcView.visibility = View.GONE
+            layout_ArcView_nullItem.visibility = View.VISIBLE
+        } else {
+            layout_ArcView.visibility = View.VISIBLE
+            layout_ArcView_nullItem.visibility = View.GONE
+            val adapter = ArcTypeAdapter(TimeErApplication.ArcData, resources)
+            val layoutManager = LinearLayoutManager(this.context)
+            layoutManager.orientation = LinearLayoutManager.VERTICAL
+            recyclerViewArc?.layoutManager = layoutManager
+            recyclerViewArc?.adapter = adapter
+            arc.setData(TimeErApplication.ArcData)
+            arc.invalidate()
+        }
+
     }
 }

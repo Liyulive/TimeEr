@@ -37,10 +37,10 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/outline_file_upload_black_48" />
+                app:srcCompat="@drawable/uploading_amico" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,10 +73,10 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/outline_file_download_black_48" />
+                app:srcCompat="@drawable/download_amico" />
 
             <TextView
                 android:layout_width="wrap_content"

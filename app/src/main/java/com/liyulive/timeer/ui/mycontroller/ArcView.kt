@@ -83,7 +83,7 @@ class ArcView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         var start = 0f
         //画Arc
         for (i in 0 until datas.size) {
-            mPaint.color = MdCard.getColor(resources, datas[i].color)
+            mPaint.color = MdCard.getArcColor(resources, i)
             val angles: Float = ((datas[i].data.toFloat() / total.toFloat()) * 360).toFloat()
             canvas?.drawArc(rect, start, angles, true, mPaint)
             start += angles

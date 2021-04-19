@@ -13,6 +13,7 @@
         app:cardCornerRadius="8dp">
 
         <LinearLayout
+            android:id="@+id/layout_ArcView"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:orientation="horizontal"
@@ -23,7 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_height="400px"
                 android:layout_weight="1"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewArc"
@@ -34,6 +35,34 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layout_ArcView_nullItem"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:visibility="gone"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="156dp"
+                    android:layout_height="156dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/empty_rafiki"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="这里空空的，换个日期吧" />
+
+            </LinearLayout>
+
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </ScrollView>

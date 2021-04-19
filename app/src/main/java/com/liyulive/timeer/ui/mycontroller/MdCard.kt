@@ -69,4 +69,22 @@ object MdCard {
         }
     }
 
+    fun getArcColor(resources: Resources, color: Int): Int {
+        return when (color) {
+            0 -> resources.getColor(R.color.arc_0)
+            1 -> resources.getColor(R.color.arc_1)
+            2 -> resources.getColor(R.color.arc_2)
+            3 -> resources.getColor(R.color.arc_3)
+            4 -> resources.getColor(R.color.arc_4)
+            5 -> resources.getColor(R.color.arc_5)
+            6 -> resources.getColor(R.color.arc_6)
+            7 -> resources.getColor(R.color.arc_7)
+            8 -> resources.getColor(R.color.arc_8)
+            9 -> resources.getColor(R.color.arc_9)
+            10 -> resources.getColor(R.color.arc_10)
+            11 -> resources.getColor(R.color.arc_11)
+            else -> resources.getColor(R.color.teal_700)
+        }
+    }
+
 }

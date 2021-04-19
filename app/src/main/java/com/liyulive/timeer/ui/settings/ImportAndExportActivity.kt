@@ -14,6 +14,7 @@ class ImportAndExportActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -22,4 +23,5 @@ class ImportAndExportActivity : AppCompatActivity() {
         }
         return true
     }
+
 }
