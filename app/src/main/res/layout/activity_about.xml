@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="56dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="0dp"
@@ -59,8 +59,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_primary"
+                android:textSize="16sp"
                 android:text="记录一天的每一时间"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:text="alpha (1)"
+                android:textSize="12sp"
+                android:textColor="@color/text_unprimary"/>
 
         </LinearLayout>
 

@@ -89,8 +89,10 @@ class TimeListAdapter(
 
         val editDialogFragment = EditDialogFragment(timeList[position])
         holder.card.setOnClickListener {
-            editDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
-            editDialogFragment.show(fragment.parentFragmentManager, "yes")
+            if (!editDialogFragment.isAdded) {
+                editDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
+                editDialogFragment.show(fragment.parentFragmentManager, "yes")
+            }
         }
     }
 

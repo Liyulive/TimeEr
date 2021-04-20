@@ -35,6 +35,7 @@
                 android:src="@drawable/data_processing_animate"/>
 
             <TextView
+                android:id="@+id/textView_nullItem"
                 android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

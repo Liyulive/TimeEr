@@ -52,4 +52,13 @@ object Repository {
     fun queryTimerFromType(type: Int): List<Timer> {
         return typeDao.queryFromType(type)
     }
+
+    fun deleteAllType() {
+        typeDao.deleteAllType()
+    }
+
+    fun deleteAllTimer() {
+        typeDao.deleteAllTimer()
+    }
+
 }

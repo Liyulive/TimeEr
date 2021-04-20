@@ -59,9 +59,11 @@ class HomeFragment : Fragment() {
             if (homeViewModel.timeList.isEmpty()) {
                 timeRecyclerView.visibility = View.INVISIBLE
                 layout_nullItem.visibility = View.VISIBLE
+                textView_nullItem.text = "什么也没有呢，从今天开始记录吧"
             } else {
                 timeRecyclerView.visibility = View.VISIBLE
                 layout_nullItem.visibility = View.INVISIBLE
+                textView_nullItem.text = "什么也没有呢，点击按钮来记录今天的数据吧"
             }
 
             /*获取统计图的数据*/

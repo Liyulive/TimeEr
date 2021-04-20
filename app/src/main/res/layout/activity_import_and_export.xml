@@ -21,7 +21,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_export"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="240dp"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="8dp"
@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/text_primary"
+                android:layout_marginTop="@dimen/dp_4"
                 android:text="我要导出" />
 
         </LinearLayout>
@@ -56,7 +57,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_import"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="240dp"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="8dp"
@@ -83,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/text_primary"
+                android:layout_marginTop="@dimen/dp_4"
                 android:text="我要导入" />
 
         </LinearLayout>

@@ -34,4 +34,10 @@ interface TimerDao {
     @Delete
     fun deleteType(type: DiyType)
 
+    @Query("delete from DiyType")
+    fun deleteAllType()
+
+    @Query("delete from Timer")
+    fun deleteAllTimer()
+
 }

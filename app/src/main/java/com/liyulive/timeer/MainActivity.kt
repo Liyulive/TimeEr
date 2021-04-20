@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity(), com.haibin.calendarview.CalendarView.O
         homeViewModel.today = "${calendar.curYear}-${calendar.curMonth}-${calendar.curDay}"
         homeViewModel.selectDay = homeViewModel.today
         homeViewModel.getTimeList(homeViewModel.today)
+        calendar.scrollToCurrent()
 
     }
 

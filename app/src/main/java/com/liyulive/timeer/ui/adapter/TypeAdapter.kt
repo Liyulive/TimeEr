@@ -78,20 +78,22 @@ class TypeAdapter(var typeList: ArrayList<DiyType>, val resources: Resources, va
 
         holder.type_card.setOnClickListener {
             val addDialogFragment = AddDialogFragment(DiyType)
-            addDialogFragment.setOnButtonClickListener(object :
-                AddDialogFragment.DialogOnClickListener {
-                override fun addClick() {
-                }
+            if (!addDialogFragment.isAdded) {
+                addDialogFragment.setOnButtonClickListener(object :
+                    AddDialogFragment.DialogOnClickListener {
+                    override fun addClick() {
+                    }
 
-                override fun editClick() {
-                    typeList.clear()
-                    typeList.addAll(queryAllType() as ArrayList<DiyType>)
+                    override fun editClick() {
+                        typeList.clear()
+                        typeList.addAll(queryAllType() as ArrayList<DiyType>)
 //                    notifyDataSetChanged()
-                    notifyItemChanged(position)
-                }
-            })
-            addDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
-            addDialogFragment.show(fragmentManager, "editType")
+                        notifyItemChanged(position)
+                    }
+                })
+                addDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
+                addDialogFragment.show(fragmentManager, "editType")
+            }
         }
 
     }

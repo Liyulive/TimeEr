@@ -48,20 +48,22 @@ class DiyTypeActivity : AppCompatActivity() {
             R.id.add_type -> {
                 val nullType = DiyType("", "", 0)
                 val addDialogFragment = AddDialogFragment(nullType)
-                addDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
-                addDialogFragment.setOnButtonClickListener(object :
-                    AddDialogFragment.DialogOnClickListener {
-                    override fun addClick() {
-                        TypeList.clear()
-                        val mList = Repository.queryAllType() as ArrayList<DiyType>
-                        TypeList.addAll(mList)
-                        adapter.notifyItemInserted(mList.size - 1)
-                    }
+                if (!addDialogFragment.isAdded) {
+                    addDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_bottom_full)
+                    addDialogFragment.setOnButtonClickListener(object :
+                        AddDialogFragment.DialogOnClickListener {
+                        override fun addClick() {
+                            TypeList.clear()
+                            val mList = Repository.queryAllType() as ArrayList<DiyType>
+                            TypeList.addAll(mList)
+                            adapter.notifyItemInserted(mList.size - 1)
+                        }
 
-                    override fun editClick() {
-                    }
-                })
-                addDialogFragment.show(this.supportFragmentManager, "addType")
+                        override fun editClick() {
+                        }
+                    })
+                    addDialogFragment.show(this.supportFragmentManager, "addType")
+                }
             }
             android.R.id.home -> finish()
         }

@@ -18,4 +18,5 @@ interface TypeDao {
     @Delete
     fun deleteType(type: DiyType)
 
+
 }
