@@ -4,17 +4,16 @@ import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.provider.ContactsContract
+import android.os.Handler
 import android.provider.OpenableColumns
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toFile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -23,16 +22,19 @@ import com.liyulive.timeer.TimeErApplication
 import com.liyulive.timeer.logic.Repository
 import com.liyulive.timeer.logic.model.DiyType
 import com.liyulive.timeer.logic.model.Timer
+import com.liyulive.timeer.ui.adapter.TimeListAdapter
 import kotlinx.android.synthetic.main.activity_import_and_export.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.*
-import java.lang.StringBuilder
 import java.lang.reflect.Type
 import kotlin.concurrent.thread
+import kotlin.math.min
 import kotlin.random.Random
 
 class ImportAndExportActivity : AppCompatActivity() {
 
     private val mTag = 11
+    val version = Build.VERSION.SDK_INT
 
     @SuppressLint("SdCardPath")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,20 +50,28 @@ class ImportAndExportActivity : AppCompatActivity() {
         card_export.setOnClickListener {
 
             val timeList = Repository.queryAllTime()
-            val typelist = Repository.queryAllType()
+            val typeList = Repository.queryAllType()
 
             val gson = Gson()
             val allTime: String = gson.toJson(timeList)
-            val allType: String = gson.toJson(typelist)
+            val allType: String = gson.toJson(typeList)
             sharedPreferences.edit().putString("timeList", allTime).apply()
             sharedPreferences.edit().putString("typeList", allType).apply()
+
             writeTo(
                 readXml(File("data/data/com.liyulive.timeer/shared_prefs/TimeErData.xml")),
                 getDownDirs(),
                 "timeer.tdb"
             )
+            Handler().postDelayed({
+                writeTo(
+                    readXml(File("data/data/com.liyulive.timeer/shared_prefs/TimeErData.xml")),
+                    getDownDirs(),
+                    "timeer.tdb"
+                )
+            }, 100)
 
-            Toast.makeText(this, "数据已保存到Download/timeerata.tdb", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "数据已保存到Download/timeer.tdb", Toast.LENGTH_SHORT).show()
         }
 
         card_import.setOnClickListener {
@@ -77,7 +87,13 @@ class ImportAndExportActivity : AppCompatActivity() {
                 var file: File? = null
                 val uri: Uri? = data.data
                 if (uri != null) {
-                    file = uriToFileQ(this, uri)
+
+                    file = if (version < 29) {
+                        uriToFileN(this, uri)
+                    } else {
+                        uriToFileQ(this, uri)
+                    }
+
                     if (file == null) {
                         Toast.makeText(TimeErApplication.context, "没有此文件", Toast.LENGTH_SHORT)
                             .show()
@@ -148,6 +164,33 @@ class ImportAndExportActivity : AppCompatActivity() {
             }
 
         } else null
+
+    fun uriToFileN(context: Context, uri: Uri): File? {
+        try {
+            val returnCursor = context.contentResolver.query(uri, null, null, null, null)
+            val nameIndex: Int = returnCursor!!.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            returnCursor.moveToFirst()
+            val name: String = returnCursor.getString(nameIndex)
+            val file = File(context.filesDir, name)
+            val inputStream = context.contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(file)
+            var read = 0
+            val maxBufferSize = 1 * 1024 * 1024
+            val bytesAvailable = inputStream?.available()
+            val bufferSize = bytesAvailable?.let { min(it, maxBufferSize) }
+            val buffers = bufferSize?.let { ByteArray(it) }
+            while ((inputStream?.read(buffers).also { read = it!! }) != -1) {
+                outputStream.write(buffers, 0, read)
+            }
+            returnCursor.close()
+            inputStream?.close()
+            outputStream.close()
+            return file
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

@@ -34,14 +34,14 @@ abstract class TimerDB : RoomDatabase() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         Executors.newSingleThreadExecutor().execute {
-                            instance?.typeDao()?.insertType(DiyType("学习", "上课/听讲/思考/研究/实践", 1))
-                            instance?.typeDao()?.insertType(DiyType("工作", "打工人，打工魂", 2))
-                            instance?.typeDao()?.insertType(DiyType("休闲娱乐", "游戏/音乐/阅读", 3))
-                            instance?.typeDao()?.insertType(DiyType("运动", "各种体育运动", 4))
-                            instance?.typeDao()?.insertType(DiyType("睡觉", "睡觉/午睡", 5))
-                            instance?.typeDao()?.insertType(DiyType("用餐", "干饭干饭~", 6))
-                            instance?.typeDao()?.insertType(DiyType("歇息", "小憩一会儿", 7))
-                            instance?.typeDao()?.insertType(DiyType("杂项事务", "杂七杂八一些事情囖", 8))
+                            instance?.typeDao()?.insertType(DiyType("学习", "上课/听讲/思考/研究/实践", 12))
+                            instance?.typeDao()?.insertType(DiyType("工作", "打工人，打工魂", 8))
+                            instance?.typeDao()?.insertType(DiyType("休闲娱乐", "游戏/音乐/阅读", 0))
+                            instance?.typeDao()?.insertType(DiyType("运动", "各种体育运动", 17))
+                            instance?.typeDao()?.insertType(DiyType("睡觉", "睡觉/午睡", 19))
+                            instance?.typeDao()?.insertType(DiyType("用餐", "干饭干饭~", 16))
+                            instance?.typeDao()?.insertType(DiyType("歇息", "小憩一会儿", 18))
+                            instance?.typeDao()?.insertType(DiyType("杂项事务", "杂七杂八一些事情囖", 21))
                         }
                     }
                 })
